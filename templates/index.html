@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche HAL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Recherche HAL</h1>
+
+        <!-- Barre de recherche -->
+        <form method="POST" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search_query" placeholder="Entrez un nom complet">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </form>
+
+        <!-- Chargement de fichier -->
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label for="file" class="form-label">Charger un fichier .xlsx</label>
+                <input type="file" class="form-control" name="file" id="file">
+            </div>
+            <button type="submit" class="btn btn-success">Charger</button>
+        </form>
+
+        <!-- Bouton pour aller à la recherche par fichier -->
+        <a href="{{ url_for('search_from_file') }}" class="btn btn-primary">Recherche par fichier</a>
+
+        <!-- Affichage des erreurs -->
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <!-- Affichage des résultats -->
+        {% if results %}
+        <h2>Résultats :</h2>
+        <ul>
+            <li>Nombre total de publications : {{ results.stats.num_publications }}</li>
+            <li>Laboratoire principal : {{ results.stats.main_labo }}</li>
+        </ul>
+        <h3>Détails des publications :</h3>
+        <ul>
+            {% for detail in results.details %}
+            <li>
+                <strong>Titre :</strong> {{ detail.title }}<br>
+                <strong>Auteurs :</strong> {{ detail.authors }}<br>
+                <strong>Domaine :</strong> {{ detail.domain }}<br>
+                <strong>Laboratoire :</strong> {{ detail.labo }}
+            </li>
+            <hr>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

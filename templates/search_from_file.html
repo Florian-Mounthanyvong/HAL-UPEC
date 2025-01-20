@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche par fichier</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Recherche par fichier</h1>
+
+        <!-- Affichage des erreurs -->
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <!-- Formulaire de sélection de laboratoire -->
+        <form method="POST" class="mb-4">
+            <div class="mb-3">
+                <label for="selected_labo" class="form-label">Sélectionnez un laboratoire :</label>
+                <select class="form-select" name="selected_labo" id="selected_labo" required>
+                    <option value="">-- Choisissez un laboratoire --</option>
+                    {% for labo in labo_list %}
+                    <option value="{{ labo }}">{{ labo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
+
+        <!-- Affichage des résultats -->
+        {% if results %}
+        <h2>Résultats :</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Laboratoire</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.Nom }}</td>
+                    <td>{{ result.Prénom }}</td>
+                    <td>{{ result.LABO }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <!-- Bouton retour -->
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour à l'accueil</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traitement en cours</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Traitement en cours...</h1>
+    <div id="progress-container">
+        <progress id="progress-bar" value="0" max="100"></progress>
+        <span id="progress-text">0%</span>
+    </div>
+    <form action="{{ url_for('cancel') }}">
+        <button type="submit">Annuler</button>
+    </form>
+
+    <script>
+        const socket = io();
+        const progressBar = document.getElementById("progress-bar");
+        const progressText = document.getElementById("progress-text");
+
+        socket.on("progress", (data) => {
+            progressBar.value = data.progress;
+            progressText.textContent = `${data.progress}%`;
+        });
+    </script>
+</body>
+</html>
