@@ -8,6 +8,8 @@
 </head>
 <body>
     <div class="container mt-5">
+                <!-- Bouton retour -->
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour à l'accueil</a>
         <h1 class="text-center">Recherche par fichier</h1>
 
         <!-- Affichage des erreurs -->
@@ -35,25 +37,25 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Laboratoire</th>
+                    <th>Nom Complet</th>
+                    <th>Titre</th>
+                    <th>Domaine</th>
                 </tr>
             </thead>
             <tbody>
                 {% for result in results %}
                 <tr>
-                    <td>{{ result.Nom }}</td>
-                    <td>{{ result.Prénom }}</td>
-                    <td>{{ result.LABO }}</td>
+                    <td>{{ result.Prénom }}
+                     {{ result.Nom }}</td>
+                    <td>{{ result.TITRE }}</td>
+                    <td>{{ result.DOMAINE }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         {% endif %}
 
-        <!-- Bouton retour -->
-        <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour à l'accueil</a>
+
     </div>
 </body>
 </html>

@@ -25,13 +25,16 @@ def load_excel_file():
             # Charger le fichier Excel
             data = pd.read_excel(SPECIFIC_FILE)
             if "LABO" not in data.columns:
+                print("La colonne 'LABO' est absente du fichier.")
                 raise ValueError("La colonne 'LABO' est absente du fichier.")
             return data
         except Exception as e:
+            print(f"Erreur lors du chargement du fichier : {str(e)}")
             flash(f"Erreur lors du chargement du fichier : {str(e)}")
             return None
     else:
         flash(f"Le fichier '{SPECIFIC_FILE}' est introuvable.")
+        print(f"Le fichier '{SPECIFIC_FILE}' est introuvable.")
         return None
 
 @app.route("/", methods=["GET", "POST"])
@@ -69,8 +72,9 @@ def search_from_file():
 
     # Si le fichier n'est pas valide, rester sur la page et afficher une erreur
     if data is None:
+        print("Le fichier requis 'date.xlsx' est introuvable ou invalide.")
         flash("Le fichier requis 'date.xlsx' est introuvable ou invalide.")
-        return render_template("error.html")  # Créez une page d'erreur distincte si nécessaire.
+        return render_template("search_from_file.html", labo_list=[], results=None, error=None)
 
     # Extraire les laboratoires uniques
     labo_list = data["LABO"].dropna().unique()
