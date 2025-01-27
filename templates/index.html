@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recherche HAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
+
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Recherche HAL</h1>
@@ -26,6 +28,20 @@
             </div>
             <button type="submit" class="btn btn-success">Charger</button>
         </form>
+        <!-- Lien pour télécharger le fichier traité -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-success mt-3">
+            {{ messages[0] }}
+            <br>
+            <a href="{{ url_for('download_file', filename='data_propre.xlsx') }}"
+                class="btn btn-primary mt-2">Télécharger le fichier traité</a>
+            <a href="{{ url_for('update_database') }}" 
+                class="btn btn-warning mt-2">Mettre à jour la base de données</a>
+
+        </div>
+        {% endif %}
+        {% endwith %}
 
         <!-- Bouton pour aller à la recherche par fichier -->
         <a href="{{ url_for('search_from_file') }}" class="btn btn-primary">Recherche par fichier</a>
@@ -40,7 +56,6 @@
         <h2>Résultats :</h2>
         <ul>
             <li>Nombre total de publications : {{ results.stats.num_publications }}</li>
-            <li>Laboratoire principal : {{ results.stats.main_labo }}</li>
         </ul>
         <h3>Détails des publications :</h3>
         <ul>
@@ -49,7 +64,6 @@
                 <strong>Titre :</strong> {{ detail.title }}<br>
                 <strong>Auteurs :</strong> {{ detail.authors }}<br>
                 <strong>Domaine :</strong> {{ detail.domain }}<br>
-                <strong>Laboratoire :</strong> {{ detail.labo }}
             </li>
             <hr>
             {% endfor %}
@@ -57,4 +71,5 @@
         {% endif %}
     </div>
 </body>
+
 </html>
